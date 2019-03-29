@@ -21,3 +21,6 @@ Route::get('posts', 'PostController@index');
 Route::post('posts/{post}', 'PostController@update');
 Route::delete('posts/{post}', 'PostController@destroy');
 Route::put('posts', 'PostController@store');
+Route::post('/register', 'AuthController@register');
+Route::post('/login', 'AuthController@login');
+Route::post('/logout', 'AuthController@logout');
