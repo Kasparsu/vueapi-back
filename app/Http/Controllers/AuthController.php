@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use Hash;
@@ -30,7 +31,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
 
         if($validator->fails()){
@@ -71,15 +72,5 @@ class AuthController extends Controller
         }
 
         return response()->json(compact('user'));
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return response()->json(['token' => auth()->refresh()]);
     }
 }
