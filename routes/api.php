@@ -21,6 +21,7 @@ Route::post('posts/{post}', 'PostController@update');
 Route::delete('posts/{post}', 'PostController@destroy');
 Route::put('posts', 'PostController@store');
 
+
 Route::post('/register', 'AuthController@register');
 
 Route::post('/login', 'AuthController@authenticate');
@@ -35,3 +36,4 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('posts/{id}/undislike', 'LikeController@undislikePost');
 //    Route::get('closed', 'DataController@closed');
 });
+
