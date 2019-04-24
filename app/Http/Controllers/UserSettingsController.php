@@ -35,7 +35,11 @@ class UserSettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = $request->input('content');
+        $userId = $request->user()->id;
+
+        //$request->user()->settings()->update(array('values' => $content));
+        echo $userId;
     }
 
     /**

@@ -20,12 +20,6 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password',
     ];
 
-    protected $with = ['user_settings'];
-
-    public function user_settings(){
-        return $this->hasOne(UserSettings::class);
-    }
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -43,6 +37,11 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $with = ['settings'];
+    public function settings(){
+        return $this->hasOne(UserSettings::class);
+    }
 
     public function getJWTIdentifier()
     {

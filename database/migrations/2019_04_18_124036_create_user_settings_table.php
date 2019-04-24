@@ -15,12 +15,9 @@ class CreateUserSettingsTable extends Migration
     {
         Schema::create('user_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('age');
-            $table->string('biography');
-            $table->boolean('language_filter_enabled');
-            $table->boolean('night_mode_enabled');
+            $table->json('values');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

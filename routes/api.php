@@ -27,6 +27,7 @@ Route::post('/login', 'AuthController@authenticate');
 Route::get('/refresh', 'AuthController@refresh');
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'AuthController@getAuthenticatedUser');
+    Route::post('usersettings', "UserSettingsController@store");
     Route::get('posts', 'PostController@index');
     Route::get('posts/{post}', 'PostController@show');
     Route::get('posts/{id}/like', 'LikeController@likePost');
