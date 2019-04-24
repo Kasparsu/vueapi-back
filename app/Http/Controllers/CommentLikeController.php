@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Like;
-use App\Post;
-use Illuminate\Http\Request;
+use App\CommentLike;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 
-class LikeController extends Controller
+class CommentLikeController extends Controller
 {
     public function unlikeComment($id){
         return $this->removeLike($id);
@@ -29,13 +28,11 @@ class LikeController extends Controller
         $user = Auth::user();
         $comment = Comment::where('id', $id)->first();
         if($user && $comment){
-            $like = $user->commentLikes()->where('comment_id', $id)->first();
+            $like = new CommentLike();
             $like->comment()->associate($comment);
             $like->user()->associate($user);
             $like->save();
         }
         return $comment;
     }
-
-
 }
