@@ -39,5 +39,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('posts/{post}/comments', 'CommentController@poll');
     Route::post('favorites/{post}/save', 'FavoritesController@savePostToFavorites');
     Route::post('favorites/{post}/remove', 'FavoritesController@removePostFromFavorites');
+    Route::get('favorites/get', 'FavoritesController@getFavoritesPosts');
 //    Route::get('closed', 'DataController@closed');
 });
