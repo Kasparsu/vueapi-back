@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Favorite;
 use App\Post;
-use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FavoritesController extends Controller
@@ -46,7 +44,7 @@ class FavoritesController extends Controller
         $user = Auth::user();
 //        $id = 12;
 //        $user = User::find($id);
-        $favoritePosts = $user->favorites;
+        $favoritePosts = $user->favorites()->paginate(10);
 
 
 
