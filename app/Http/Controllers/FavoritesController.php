@@ -47,7 +47,7 @@ class FavoritesController extends Controller
 //        $id = 12;
 //        $user = User::find($id);
         $favoritePosts = $user->favorites;
-        dd($favoritePosts);
+
 
 
         return $favoritePosts;
