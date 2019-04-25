@@ -28,10 +28,13 @@ class CommentLikeController extends Controller
         $user = Auth::user();
         $comment = Comment::where('id', $id)->first();
         if($user && $comment){
-            $like = new CommentLike();
-            $like->comment()->associate($comment);
-            $like->user()->associate($user);
-            $like->save();
+            $like = $user->commentLikes()->where('comment_id', $id)->first();
+            if (!$like) {
+                $like = new CommentLike();
+                $like->comment()->associate($comment);
+                $like->user()->associate($user);
+                $like->save();
+            }
         }
         return $comment;
     }
