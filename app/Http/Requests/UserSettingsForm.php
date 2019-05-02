@@ -14,9 +14,4 @@ class UserSettingsForm extends FormRequest
             'language_filter_enabled' => 'required|boolean',
         ];
     }
-
-    public function onlyInRules()
-    {
-        return $this->only(array_keys($this->rules()));
-    }
 }

@@ -36,8 +36,7 @@ class UserSettingsController extends Controller
      */
     public function store(UserSettingsForm $request)
     {
-        //$validated = $request->validated();
-        $content = json_decode($request->getContent());
+        $content = $request->validated();
 
         $request->user()->settings['values'] = $content;
         $request->user()->settings->save();
