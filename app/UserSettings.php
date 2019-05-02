@@ -13,5 +13,4 @@ class UserSettings extends Model
     protected $casts = [
         'values' => 'array',
     ];
-
 }
