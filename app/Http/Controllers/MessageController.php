@@ -13,7 +13,7 @@ class MessageController extends Controller
     {
         $message = ['content' => $request->input('content')];
         $message += ['user' => \Auth::user()];
-        event(new NewMessage($message));
+        broadcast(new NewMessage($message))->toOthers();
         return $message;
     }
 
