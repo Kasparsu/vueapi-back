@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use Hash;
@@ -72,7 +73,7 @@ class AuthController extends Controller
 
         return response()->json(compact('user'));
     }
-
+    
     /**
      * Refresh a token.
      *
@@ -82,4 +83,5 @@ class AuthController extends Controller
     {
         return response()->json(['token' => auth()->refresh()]);
     }
-}
+} 
+

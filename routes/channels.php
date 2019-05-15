@@ -17,3 +17,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('comments', function () {
     return true;
 });
+Broadcast::channel('message', function () {
+    return true;
+});
