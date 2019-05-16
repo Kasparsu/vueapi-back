@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Like;
 use App\Post;
+use App\Reactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,5 +50,36 @@ class LikeController extends Controller
         return $post;
     }
 
+    private function saveReaction($id, $value){
+        $user = Auth::user();
+        $post = Post::where('id', $id)->with('images')->first();
+        if($user && $post){
+            $reaction = $user->reactions()->where('post_id', $id)->first();
+            if($reaction){
+                $reaction->reaction_value = $value;
+            } else {
+                $reaction = new Reactions(['reaction_value' => $value]);
+                $reaction->post()->associate($post);
+                $reaction->user()->associate($user);
+            }
+            $reaction->save();
+        }
+        return $post;
+    }
 
+    private function removeReaction($id){
+        $user = Auth::user();
+        $post = Post::where('id', $id)->with('images')->first();
+        $like = $post->reactions()->where('user_id', $user->id)->first();
+        $like->delete();
+        return $post;
+    }
+
+    public function reactPost($id, $value){
+        return $this->saveReaction($id, $value);
+    }
+
+    public function unReactPost($id){
+        return $this->removeReaction($id);
+    }
 }
