@@ -17,7 +17,9 @@ class Post extends Model
         'score',
         'likes_count',
         'dislikes_count',
-        'comments_count'
+        'comments_count',
+        'reaction_value',
+        'reaction_count'
     ];
     protected $with = ['images'];
     public function images(){
@@ -31,6 +33,9 @@ class Post extends Model
     }
     public function comments(){
         return $this->hasMany(Comment::class);
+    }
+    public function reactions(){
+        return $this->hasMany(Reactions::class);
     }
     public function getIsLikedAttribute()
     {
@@ -63,5 +68,34 @@ class Post extends Model
     public function getCommentsCountAttribute()
     {
         return $this->comments()->count();
+    }
+    public function getReactionValueAttribute()
+    {
+        $user = Auth::user();
+        if($user){
+            $reactarray = $this->reactions()->where('user_id', $user->id)->get();
+            if(!empty($reactarray[0]))
+            {
+                return $reactarray[0]->reaction_value;
+            }
+        }
+        return false;
+    }
+    public function getReactionCountAttribute()
+    {
+        $reactarray = $this->reactions()->get();
+        $returnarray=[0,0,0,0];
+        if(!empty($reactarray))
+        {
+            foreach($reactarray as $react){
+                $singleCount = $react->reaction_value;
+                if($singleCount==1) { $returnarray[0] += 1; }
+                if($singleCount==2) { $returnarray[1] += 1; }
+                if($singleCount==3) { $returnarray[2] += 1; }
+                if($singleCount==4) { $returnarray[3] += 1; }
+            }
+            return $returnarray;
+        }
+        return false;
     }
 }
