@@ -29,11 +29,17 @@ class FavoritesController extends Controller
     private function savePost($id){
         $user = Auth::user();
         $post = Post::where('id', $id)->with('images')->first();
-        $favorite = new Favorite();
-        $favorite->post()->associate($post);
-        $favorite->user()->associate($user);
-        $favorite->save();
-        return $post;
+        $fav = Favorite::where('user_id', $user->id)->where('post_id', $id)->first();
+        if($fav){
+            $fav->delete();
+            return 'deleted';
+        } else {
+            $favorite = new Favorite();
+            $favorite->post()->associate($post);
+            $favorite->user()->associate($user);
+            $favorite->save();
+            return 'saved';
+        }
     }
 
     public function getFavoritesPosts(){

@@ -17,7 +17,8 @@ class Post extends Model
         'score',
         'likes_count',
         'dislikes_count',
-        'comments_count'
+        'comments_count',
+        'is_favourite'
     ];
     protected $with = ['images'];
     public function images(){
@@ -48,6 +49,14 @@ class Post extends Model
         $user = Auth::user();
         if($user){
             return $this->likes()->where('user_id', $user->id)->where('value', -1)->exists();
+        }
+        return false;
+    }
+    public function getIsFavouriteAttribute()
+    {
+        $user = Auth::user();
+        if($user){
+            return $this->favorites()->where('user_id', $user->id)->exists();
         }
         return false;
     }
