@@ -38,6 +38,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function favorites()
+    {
+        return $this->belongsToMany(Post::class, 'favorites');
+
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -23,6 +23,8 @@ Route::put('posts', 'PostController@store');
 
 Route::post('/register', 'AuthController@register');
 
+
+
 Route::post('/login', 'AuthController@authenticate');
 Route::get('/refresh', 'AuthController@refresh');
 Route::group(['middleware' => ['jwt.verify']], function() {
@@ -35,5 +37,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('posts/{id}/undislike', 'LikeController@undislikePost');
     Route::post('posts/{post}/comment', 'CommentController@store');
     Route::get('posts/{post}/comments', 'CommentController@poll');
+    Route::post('favorites/{post}/save', 'FavoritesController@savePostToFavorites');
+    Route::post('favorites/{post}/remove', 'FavoritesController@removePostFromFavorites');
+    Route::get('favorites/get', 'FavoritesController@getFavoritesPosts');
 //    Route::get('closed', 'DataController@closed');
 });
