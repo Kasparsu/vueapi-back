@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'bio', 'age',
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 
     ];
 
     /**
@@ -36,6 +36,8 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'bio' => 'Heres my bio',
+        'age' => 18
     ];
 
     public function getJWTIdentifier()
@@ -50,4 +52,9 @@ class User extends Authenticatable implements JWTSubject
     public function likes(){
         return $this->hasMany(Like::class);
     }
+
+    /*
+    public function updateBio(){
+
+    }*/
 }

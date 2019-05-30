@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Hash;
 use JWTAuth;
@@ -25,6 +26,18 @@ class AuthController extends Controller
         return response()->json(compact('token'));
     }
 
+    public function getProfile($id){
+        $user = DB::table('users')->where('id', $id)->first();
+        return response()->json($user);
+    }
+
+    public function setProfileBio($id, Request $request){
+        //lol xd
+        $bio=$request->get('bio');
+        DB::table('users')->where('id', $id)->update(['bio'=>$bio]);
+        return response();
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -41,6 +54,8 @@ class AuthController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'bio' => "Heres my bio",
+            'age' => 18
         ]);
 
         $token = JWTAuth::fromUser($user);

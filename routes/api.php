@@ -25,6 +25,8 @@ Route::post('/register', 'AuthController@register');
 
 Route::post('/login', 'AuthController@authenticate');
 Route::get('/refresh', 'AuthController@refresh');
+Route::get('profile/{id}',"AuthController@getProfile");
+Route::post('profile/{id}',"AuthController@setProfileBio");
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'AuthController@getAuthenticatedUser');
     Route::get('posts', 'PostController@index');
